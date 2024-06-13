@@ -26,9 +26,9 @@ void sensor_aht20_init(void)
 {
     if (aht20.begin() == false)
     {
-        Serial.println("AHT20 not detected. Please check wiring.");
+        Serial.println("AHT20 Error");
     }
-    Serial.println("AHT20 acknowledged.");
+    Serial.println("AHT20 Init");
 }
 
 /**
@@ -77,9 +77,9 @@ AHT20Data sensor_aht20_data(void)
 void sensor_bmp280_init(void)
 {
     if(!bmp280.init()){
-        Serial.println("BMP280 not detected. Please check wiring.");
+        Serial.println("BMP280 Error");
     }
-    Serial.println("BMP280 acknowledged.");
+    Serial.println("BMP280 Init");
 }
 
 /**
@@ -106,7 +106,7 @@ BMP280Data sensor_bmp280_data(void)
 */
 void sensor_uv_init(void)
 {
-    Serial.println("uv sensor init");
+    Serial.println("uv init");
     pinMode(UVPIN, INPUT);
 }
 
@@ -123,7 +123,7 @@ uint8_t sensor_uv_data(void)
     float uvVoltage = 0;
     uint8_t uvLevel;
     uvValue = analogRead(UVPIN);
-    uvVoltage = uvValue/4095.0*3300.0*2;
+    uvVoltage = uvValue/4095.0*1100.0*2;
     //通过串口0 打印出读取到的值
     // Serial.println(uvValue);
     // Serial.println(uvVoltage);

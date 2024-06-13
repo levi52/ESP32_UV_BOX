@@ -59,7 +59,7 @@ void button_tick(void)
 
 void click1()
 {
-  Serial.println("Button 1 click. prev");
+  // Serial.println("Button 1 click. prev");
   pushFlag = true;
   if(currentIndex != 2)
   {
@@ -130,30 +130,30 @@ void click1()
 // This function will be called when the button1 was pressed 2 times in a short timeframe.
 void doubleclick1() 
 {
-  Serial.println("Button 1 doubleclick.");
+  // Serial.println("Button 1 doubleclick.");
 }  // doubleclick1
 
 
 // This function will be called once, when the button1 is pressed for a long time.
 void longPressStart1() 
 {
-  Serial.println("Button 1 longPress start");
+  // Serial.println("Button 1 longPress start");
 }  // longPressStart1
 
 // This function will be called often, while the button1 is pressed for a long time.
 void longPress1() 
 {
-  Serial.println("Button 1 longPress...");
+  // Serial.println("Button 1 longPress...");
 }  // longPress1
 
 // This function will be called once, when the button1 is released after beeing pressed for a long time.
 void longPressStop1() 
 {
-  Serial.println("Button 1 longPress stop");
+  // Serial.println("Button 1 longPress stop");
 }  // longPressStop1
 
 void click2() {
-  Serial.println("Button 2 click. next");
+  // Serial.println("Button 2 click. next");
   pushFlag = true;
   if(currentIndex != 2)
   {
@@ -222,22 +222,22 @@ void click2() {
 }  // click2
 
 void doubleclick2() {
-  Serial.println("Button 2 doubleclick.");
+  // Serial.println("Button 2 doubleclick.");
 }  // doubleclick2
 
 void longPressStart2() {
-  Serial.println("Button 2 longPress start");
+  // Serial.println("Button 2 longPress start");
 }  // longPressStart2
 
 void longPress2() {
-  Serial.println("Button 2 longPress...");
+  // Serial.println("Button 2 longPress...");
 }  // longPress2
 void longPressStop2() {
-  Serial.println("Button 2 longPress stop");
+  // Serial.println("Button 2 longPress stop");
 }  // longPressStop2
 
 void click3() {
-  Serial.println("Button 3 click. enter");
+  // Serial.println("Button 3 click. enter");
   currentIndex++;
   if(currentIndex > 2)
   {
@@ -245,19 +245,19 @@ void click3() {
   }
   enterFlag = true;
   pushFlag = true;
-  Serial.println(currentIndex);
+  // Serial.println(currentIndex);
 }  // click3
 
 void doubleclick3() {
-  Serial.println("Button 3 doubleclick.");
+  // Serial.println("Button 3 doubleclick.");
 }  // doubleclick3
 
 void longPressStart3() {
-  Serial.println("Button 3 longPress start");
+  // Serial.println("Button 3 longPress start");
 }  // longPressStart3
 
 void longPress3() {
-  Serial.println("Button 3 longPress...");
+  // Serial.println("Button 3 longPress...");
   if(currentPage == 3)
   {
     light_close();
@@ -271,8 +271,8 @@ void longPress3() {
 }  // longPress3
 
 void longPressStop3() {
-  Serial.println("Button 3 longPress stop");
-  if(currentPage == 4 && currentIndex == 2 && settingIndex == 0)
+  // Serial.println("Button 3 longPress stop");
+  if(currentIndex == 2 && currentPage == 4 && settingIndex == 0)
   {
     brightness_page = false;
     set_info();
@@ -282,9 +282,9 @@ void longPressStop3() {
   {
     currentIndex = 0;
   }
-  Serial.println(pushFlag);
+  // Serial.println(pushFlag);
   enterFlag = false;
   pushFlag = true;
-  Serial.println(pushFlag);
-  Serial.println(currentIndex);
+  // Serial.println(pushFlag);
+  // Serial.println(currentIndex);
 }  // longPressStop3

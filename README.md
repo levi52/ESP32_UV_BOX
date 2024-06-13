@@ -1,4 +1,5 @@
 
+<a name="readme-top"></a>
 
 # ESP32 UV BOX
 
@@ -37,30 +38,53 @@ ESP32 UV BOX
 </p>
 
 # 目录
+<!-- 目录 -->
 
-- [文件目录说明](#文件目录说明)
-- [开发工具](#开发工具)
-- [硬件](#硬件)
-- [软件](#软件)
-    - [使用到的库](#使用到的库)
-    - [程序简述](#程序简述)
-      - [屏幕页面](#屏幕页面)
-      - [UV](#uv)
-      - [AHT20](#aht20)
-      - [BMP280](#BMP280)
-      - [网络配置](#网络配置)
-      - [网络天气](#网络天气)
-      - [网络时间](#网络时间)
-      - [哔哩哔哩](#哔哩哔哩)
-      - [按键控制](#按键控制)
-- [版本控制](#版本控制)
-- [作者](#作者)
-- [鸣谢](#鸣谢)
-- [END](#END)
+<details>
+  <summary>目录</summary>
+  <ol>
+    <li>
+      <a href="#文件目录说明">文件目录说明</a>
+    </li>
+    <li>
+      <a href="#开发工具">开发工具</a>
+    </li>
+    <li>
+      <a href="#硬件">硬件</a>
+    </li>
+    <li>
+      <a href="#软件">软件</a>
+      <ul>
+        <li><a href="#使用到的库">使用到的库</a></li>
+        <li>
+          <a href="#程序简述">程序简述</a>
+          <ul>
+            <li><a href="#屏幕页面">屏幕页面</a></li>
+            <li><a href="#UV">UV</a></li>
+            <li><a href="#AHT20">AHT20</a></li>
+            <li><a href="#BMP280">BMP280</a></li>
+            <li><a href="#网络配置">网络配置</a></li>
+            <li><a href="#网络天气">网络天气</a></li>
+            <li><a href="#网络时间">网络时间</a></li>
+            <li><a href="#哔哩哔哩">哔哩哔哩</a></li>
+            <li><a href="#按键控制">按键控制</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#CONTACT">CONTACT</a></li>
+    <li><a href="#LICENSE">LICENSE</a></li>
+    <li><a href="#鸣谢">鸣谢</a></li>
+    <li><a href="#END">END</a></li>
+  </ol>
+</details>
+
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
 
 # 文件目录说明
 ```
 ESP32_UV_BOX
+│  Changelog.md        记录文档
 │  clearBuildDir.bat   build文件删除
 │  default_8MB.csv     存储分区
 │  LICENSE             开源协议
@@ -88,6 +112,8 @@ ESP32_UV_BOX
 
 ```
 
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
+
 # 开发工具
 + [立创EDA(专业版)](https://pro.lceda.cn/editor) - 硬件设计
 + [Solidworks 2023]() - 3D外壳设计
@@ -96,9 +122,13 @@ ESP32_UV_BOX
 + [File to C style array converter](https://notisrac.github.io/FileToCArray/) - 图片转换
 + [iconfont-阿里巴巴矢量图标库](https://www.iconfont.cn/) - 图标字体
 
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
+
 # 硬件
 
 硬件设计见[立创开源硬件平台](https://oshwhub.com/levi_01/simple-esp-uv-detection-box)
+
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
 
 # 软件
 
@@ -113,9 +143,11 @@ ESP32_UV_BOX
 - [ArduinoJson](https://arduinojson.org/) - 数据解析
 - [ArduinoZlib](https://github.com/tignioj/ArduinoZlib) - 文件解压缩
 
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
+
 ## 程序简述
 
-## 屏幕页面
+### 屏幕页面
 
 屏幕尺寸为1.8寸，分辨率是128x160，屏幕驱动是ST7735，使用[TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)库驱动屏幕，所有界面使用`TFT_eSPI`绘制
 
@@ -143,7 +175,9 @@ ESP32_UV_BOX
 
 使用`ledc`控制引脚输出PWM调节屏幕背光亮度
 
-## UV
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
+
+### UV
 使用S12SD传感器来检测紫外线，然后经过放大，使用ADC采集电压，根据电压范围判断紫外线指数等级
 
 程序中使用此函数获取紫外线指数
@@ -151,7 +185,9 @@ ESP32_UV_BOX
 uint8_t sensor_uv_data(void)
 ```
 
-## AHT20
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
+
+### AHT20
 使用AHT20传感器来检测环境温度和湿度，使用IIC通信协议
 
 程序中使用此函数来获取温湿度数据
@@ -166,7 +202,10 @@ struct AHT20Data
     float humidity;
 };
 ```
-## BMP280
+
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
+
+### BMP280
 使用BMP280传感器来检测环境压强和温度，并能够计算得到海拔高度，使用IIC通信协议
 
 程序中使用此函数来获取压强等数据
@@ -183,7 +222,9 @@ struct BMP280Data
 };
 ```
 
-## 网络配置
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
+
+### 网络配置
 
 初次使用时，会建立网络`ESP_UV_BOX_WIFI`
 
@@ -206,7 +247,9 @@ void doClient(void);
 void wifiConfigBySoftAP(void);
 ```
 
-## 网络天气
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
+
+### 网络天气
 
 天气等数据使用[和风天气](https://dev.qweather.com/)的[API](https://dev.qweather.com/docs/api/)，免费订阅每日有1000次请求
 
@@ -223,7 +266,9 @@ void get_city_id(void);
 String urlEncode(const String& text);
 ```
 
-## 网络时间
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
+
+### 网络时间
 
 时间数据使用[NTPClient](https://github.com/arduino-libraries/NTPClient)库获取网络时间
 
@@ -233,7 +278,9 @@ void time_init(void);
 void get_time(void);
 ```
 
-## 哔哩哔哩
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
+
+### 哔哩哔哩
 
 通过如下API接口获得JSON格式的数据，使用[ArduinoJson](https://arduinojson.org/)库解析获得关注数和粉丝数
 ```cpp
@@ -281,9 +328,13 @@ int data_black = data["black"]; // 0
 int data_follower = data["follower"]; // 56
 ```
 
-## 按键控制
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
+
+### 按键控制
 
 使用拨轮开关作为控制输入，一共有三个按键，使用[OneButton](https://github.com/mathertel/OneButton)库，支持单击、双击、长按等操作。
+
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
 
 # 实物
 + PCB
@@ -295,17 +346,21 @@ int data_follower = data["follower"]; // 56
 + 紫外线检测
 <p align="center"><img src="assets/uv.gif" width="100%"/></p>
 
-# 版本控制
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
 
-该项目使用Git进行版本管理
+# CONTACT
 
-# 作者
+levi52 - [@github][github-url]
 
-[levi52@github](https://github.com/levi52)
+travi5 - [@bilibili][bilibili-url]
 
-# 版权说明
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
 
-该项目签署了MIT 授权许可，详情请参阅 [LICENSE](https://github.com/levi52/ESP32_UV_BOX/blob/main/LICENSE)
+# LICENSE
+
+该项目签署了MIT 授权许可，详情请参阅 [LICENSE][license-url]
+
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
 
 # 鸣谢
 
@@ -314,6 +369,8 @@ int data_follower = data["follower"]; // 56
 - [bilibili: 黑人黑科技](https://www.bilibili.com/video/BV19j41187SF)
 - [bilibili: 大聪明的二手脑袋](https://www.bilibili.com/video/BV1wj421Z7Ds)
 - [csdn: 杰森硬创客](https://blog.csdn.net/YANGJIERUN/article/details/129092371)
+
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
 
 # END
 
@@ -328,7 +385,10 @@ int data_follower = data["follower"]; // 56
 <p align="center"><strong> <font color=#00bcd9 size=5>2024 levi5</font><strong></p>
 <!-- <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=35&pause=1000&color=969CF7&center=true&vCenter=true&random=false&width=435&lines=2024+levi5" alt="Typing SVG" /></a> -->
 
-<!-- links -->
+<p align="right">(<a href="#readme-top">⬆️TOP</a>)</p>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [project-path]:levi52/ESP32_UV_BOX
 [contributors-shield]: https://img.shields.io/github/contributors/levi52/ESP32_UV_BOX.svg?style=flat-square
 [contributors-url]: https://github.com/levi52/ESP32_UV_BOX/graphs/contributors
@@ -340,4 +400,6 @@ int data_follower = data["follower"]; // 56
 [issues-url]: https://img.shields.io/github/issues/levi52/ESP32_UV_BOX.svg
 [license-shield]: https://img.shields.io/github/license/levi52/ESP32_UV_BOX.svg?style=flat-square
 [license-url]: https://github.com/levi52/ESP32_UV_BOX/blob/main/LICENSE
+[github-url]: https://github.com/levi52
+[bilibili-url]: https://space.bilibili.com/378576508
 

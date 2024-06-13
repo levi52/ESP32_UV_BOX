@@ -134,7 +134,7 @@ String num2str(int digits)
 {
     String s = ""; // 初始化为空字符串
     // 如果数字小于10，就在字符串前添加一个0
-    if (digits < 10)
+    if(digits < 10)
     s = s + "0";
     // 将整数转换为字符串并追加到s中
     s = s + digits;
@@ -271,8 +271,8 @@ void BOX_UI(void)
             case 4:
                 if(settingIndex == 0)
                 {
-                    BRIGHTNESS_UI();
                     brightness_page = true;
+                    BRIGHTNESS_UI();
                 }
                 else if(settingIndex == 1)
                 {
@@ -388,7 +388,6 @@ void AHT20_UI(void)
 {
     if(pushFlag)
     {
-        Serial.println(pushFlag);
         Serial.println("AHT20");
         tft.fillScreen(TFT_BLACK);
 
@@ -445,7 +444,6 @@ void BMP280_UI(void)
 {
     if(pushFlag)
     {
-        Serial.println(pushFlag);
         Serial.println("BMP280");
         tft.fillScreen(TFT_BLACK);
 
@@ -504,8 +502,6 @@ void UV_UI(void)
 {
     if(pushFlag)
     {
-        Serial.println("UV");
-        Serial.println(pushFlag);
         Serial.println("UV");
         tft.fillScreen(TFT_BLACK);
         tft.setTextColor(TFT_CYAN);
@@ -607,7 +603,6 @@ void CLOCK_UI(void)
     if(pushFlag)
     {
         Serial.println("CLOCK");
-        Serial.println(pushFlag);
         tft.fillScreen(TFT_BLACK);
         tft.setTextColor(TFT_CYAN);
         tft.pushImage(0, 85, 30, 30, icon_temp1);
@@ -692,7 +687,6 @@ void AIQ_UI(void)
     if(pushFlag)
     {
         Serial.println("AIQ");
-        Serial.println(pushFlag);
         tft.fillScreen(TFT_BLACK);
         tft.setTextColor(TFT_CYAN);
         pushFlag = false;
@@ -738,7 +732,6 @@ void FORECAST_UI(void)
     if(pushFlag)
     {
         Serial.println("FORECAST");
-        Serial.println(pushFlag);
         tft.fillScreen(TFT_BLACK);
         tft.setTextColor(TFT_CYAN);
         pushFlag = false;
@@ -785,7 +778,6 @@ void BILIBILI_UI(void)
     if(pushFlag)
     {
         Serial.println("BILIBILI");
-        Serial.println(pushFlag);
         tft.fillScreen(TFT_BLACK);
         tft.setTextColor(TFT_CYAN);
         tft.pushImage(0, 0, 128, 60, icon_bili);
@@ -816,7 +808,6 @@ void BRIGHTNESS_UI(void)
     if(pushFlag)
     {
         Serial.println("BRIGHTNESS");
-        Serial.println(pushFlag);
         tft.setTextColor(TFT_CYAN);
         pushFlag = false;
     }
@@ -854,7 +845,6 @@ void WIFI_UI(void)
     if(pushFlag)
     {
         Serial.println("WIFI");
-        Serial.println(pushFlag);
         tft.fillScreen(TFT_BLACK);
         tft.setTextColor(TFT_CYAN);
         tft.pushImage(23, 39, 80, 80, icon_wifi);
@@ -866,7 +856,6 @@ void BLUETOOTH_UI(void)
     if(pushFlag)
     {
         Serial.println("BLUETOOTH");
-        Serial.println(pushFlag);
         tft.fillScreen(TFT_BLACK);
         tft.setTextColor(TFT_CYAN);
         tft.pushImage(23, 39, 80, 80, icon_bluetooth);
@@ -878,7 +867,6 @@ void ABOUT_UI(void)
     if(pushFlag)
     {
         Serial.println("ABOUT");
-        Serial.println(pushFlag);
         tft.setTextColor(TFT_CYAN);
         pushFlag = false;
     }

@@ -9,10 +9,10 @@
  * @par 修改日志
  * @link 
  * bilibili: https://space.bilibili.com/378576508
- * oshwhub: 
+ * oshwhub: https://oshwhub.com/levi_01/works
  * github: https://github.com/levi52
  * blog: https://levi52.github.io/
- * csdn: 
+ * csdn: https://blog.csdn.net/Levi_5
 */
 #include <Arduino.h>
 #include <Wire.h>
@@ -30,7 +30,9 @@ void adc_task(void *pt);
 void time_task(void *pt);
 void ui_task(void *pt);
 void init_ui_task(void *pt);
-
+void button_task(void *pt);
+// TaskHandle_t taskHandle;
+// int taskMem = 1024 * 10;
 void setup() {
   // 串口初始化
   Serial.begin(115200);
@@ -69,23 +71,46 @@ void setup() {
   bmp280Data = sensor_bmp280_data();
   uvLevel = sensor_uv_data();
   batteryVoltage = sensor_battery_data();
-  vTaskDelay(500);
+  vTaskDelay(200);
   // 创建任务
+  // xTaskCreatePinnedToCore(ui_task, "ui_task", taskMem, NULL, 2, &taskHandle, 1);
   xTaskCreatePinnedToCore(aht20_bmp280_task, "aht20_bmp280_task", 1024 * 2, NULL, 1, NULL, 0);
   xTaskCreatePinnedToCore(adc_task, "adc_task", 1024, NULL, 1, NULL, 0);
   xTaskCreatePinnedToCore(weather_task, "weather update", 1024 * 9, NULL, 1, NULL, 0);
   xTaskCreatePinnedToCore(time_task, "time update", 1024 * 2, NULL, 1, NULL, 0);
+  xTaskCreatePinnedToCore(button_task, "button_task", 1024 * 2, NULL, 2, NULL, 0);
+
+  // int waterMark = uxTaskGetStackHighWaterMark(taskHandle);
+  // Serial.print("Task Free Memory: ");
+  // Serial.print(waterMark);
+  // Serial.println(" Bytes");
+  // Serial.print("Task Used Memory: ");
+  // Serial.print(taskMem - waterMark);
+  // Serial.println(" Bytes");
 }
 
 void loop() {
   BOX_UI();
-  button_tick();
+  // button_tick();
   if(WiFi.status() != WL_CONNECTED)
   {
     doClient(); 
   }
 }
 
+void ui_task(void *pt)
+{
+  while(1)
+  {
+    BOX_UI();
+  }
+}
+
+/**
+ * @name init_ui_task
+ * @brief 页面加载动画
+ * @param pt
+*/
 void init_ui_task(void *pt)
 {
   INIT_UI();
@@ -159,5 +184,19 @@ void time_task(void *pt)
       get_time();
     }
     vTaskDelay(1000);
+  }
+}
+
+/**
+ * @name button_task
+ * @brief 按键处理
+ * @param pt
+*/
+void button_task(void *pt)
+{
+  while(1)
+  {
+    button_tick();
+    vTaskDelay(10);
   }
 }

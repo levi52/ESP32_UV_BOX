@@ -336,7 +336,7 @@ void wifi_connect(int timeOut_s)
     Serial.println("进入connectToWiFi()函数");
     WiFi.mode(WIFI_STA);    // 设置为STA模式并连接WIFI
     WiFi.setAutoConnect(true);  // 设置自动连接
-    if (ssid != "") //ssid不为空
+    if(ssid != "") //ssid不为空
     {
         Serial.println("用web配置信息连接.");
         WiFi.begin(ssid.c_str(), password.c_str()); // c_str(),获取该字符串的指针
@@ -354,7 +354,7 @@ void wifi_connect(int timeOut_s)
         Serial.print(".");
         delay(500);
         connectTime++;
-        if (connectTime > 2 * timeOut_s)
+        if(connectTime > 2 * timeOut_s)
         {
             Serial.println("网络连接失败");
             wifiConfigBySoftAP();
@@ -364,15 +364,13 @@ void wifi_connect(int timeOut_s)
     if(WiFi.status() == WL_CONNECTED)
     {
         Serial.println("网络连接成功");
-        Serial.println("WIFI connect Success");
         Serial.printf("SSID:%s", WiFi.SSID().c_str());
         Serial.printf(", PSW:%s\r\n", WiFi.psk().c_str());
         Serial.print("LocalIP:");
         Serial.print(WiFi.localIP());
         Serial.print(" ,GateIP:");
         Serial.println(WiFi.gatewayIP());
-        Serial.print("WIFI status is:");
-        Serial.print(WiFi.status());
+        // Serial.print(WiFi.status());
         server.stop();  // 停止开发板所建立的网络服务器。
     }
 }
@@ -416,7 +414,7 @@ bool wifi_scan(void)
     // 扫描附近WiFi
     int n = WiFi.scanNetworks();
     Serial.println("scan done");
-    if (n == 0) 
+    if(n == 0) 
     {
         Serial.println("no networks found");
         wifiNames += "<option>no networks found</option>";
@@ -430,12 +428,12 @@ bool wifi_scan(void)
         {
             // Print SSID and RSSI for each network found
             int32_t rssi = WiFi.RSSI(i);
-            Serial.print(i + 1);
-            Serial.print(": ");
-            Serial.print(WiFi.SSID(i));
-            Serial.print(" (");
-            Serial.print(rssi);
-            Serial.print(")");
+            // Serial.print(i + 1);
+            // Serial.print(": ");
+            // Serial.print(WiFi.SSID(i));
+            // Serial.print(" (");
+            // Serial.print(rssi);
+            // Serial.print(")");
             String signalStrength;
             if(rssi >= -35)
             {
@@ -469,9 +467,8 @@ void ap_init(void)
 {
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(staticIP, gateway, subnet);
-    if (WiFi.softAP(AP_SSID))   // 开启AP热点,如需要密码则添加第二个参数
+    if(WiFi.softAP(AP_SSID))   // 开启AP热点,如需要密码则添加第二个参数
     {                           
-        Serial.println("ESP32 Soft AP is right.");
         Serial.print("Soft AP IP address = ");
         Serial.println(WiFi.softAPIP());    // 接入点ip
         Serial.println(String("MAC address = ")  + WiFi.softAPmacAddress().c_str());    // 接入点mac
@@ -523,7 +520,7 @@ void handleRoot(void)
 void handleConfigWifi(void) // 返回http状态
 {
     // 判断是否有WiFi名称f
-    if (server.hasArg("ssid"))
+    if(server.hasArg("ssid"))
     {
         Serial.print("获得WiFi名称:");
         ssid = server.arg("ssid");
@@ -536,7 +533,7 @@ void handleConfigWifi(void) // 返回http状态
         return;
     }
     // 判断是否有WiFi密码
-    if (server.hasArg("password"))
+    if(server.hasArg("password"))
     {
         Serial.print("获得WiFi密码:");
         password = server.arg("password");
@@ -549,7 +546,7 @@ void handleConfigWifi(void) // 返回http状态
         return;
     }
     // 判断是否有KEY
-    if (server.hasArg("key"))
+    if(server.hasArg("key"))
     {
         Serial.print("获得和风天气 KEY:");
         key = server.arg("key");
@@ -562,7 +559,7 @@ void handleConfigWifi(void) // 返回http状态
         return;
     }
     // 判断是否有location
-    if (server.hasArg("location"))
+    if(server.hasArg("location"))
     {
         Serial.print("获得位置 Location ID:");
         location = server.arg("location");
@@ -575,7 +572,7 @@ void handleConfigWifi(void) // 返回http状态
         return;
     }
     // 判断是否有uid
-    if (server.hasArg("uid"))
+    if(server.hasArg("uid"))
     {
         Serial.print("获得bilibili UID:");
         uid = server.arg("uid");
@@ -616,7 +613,6 @@ void time_init(void)
     timeClient.begin();
     timeClient.setTimeOffset(28800);  // 8区 8*3600
     timeClient.update();
-    Serial.println( "Setup done" );
 }
 
 /**
@@ -653,7 +649,7 @@ void get_weather_now(void)
     // Serial.println(ESP.getFreeHeap());
     Serial.println("正在获取天气数据");
     //如果服务器响应OK则从服务器获取响应体信息并通过串口输出
-    if (httpCode == HTTP_CODE_OK) {
+    if(httpCode == HTTP_CODE_OK) {
         // 解压Gzip数据流
         int len = httpClient.getSize();
         uint8_t buff[2048] = { 0 };
@@ -661,12 +657,12 @@ void get_weather_now(void)
         while (httpClient.connected() && (len > 0 || len == -1)) {
             size_t size = stream->available();  // 还剩下多少数据没有读完？
             // Serial.println(size);
-            if (size) {
+            if(size) {
             size_t realsize = ((size > sizeof(buff)) ? sizeof(buff) : size);
             // Serial.println(realsize);
             size_t readBytesSize = stream->readBytes(buff, realsize);
             // Serial.write(buff,readBytesSize);
-            if (len > 0) len -= readBytesSize;
+            if(len > 0) len -= readBytesSize;
             outbuf = (uint8_t *)malloc(sizeof(uint8_t) * 5120);
             uint32_t outprintsize = 0;
             int result = ArduinoZlib::libmpq__decompress_zlib(buff, readBytesSize, outbuf, 5120, outprintsize);
@@ -727,7 +723,7 @@ void get_weather_future(void)
     int httpCode = httpClient.GET();
     Serial.println("正在获取一周天气数据");
     //如果服务器响应OK则从服务器获取响应体信息并通过串口输出
-    if (httpCode == HTTP_CODE_OK) 
+    if(httpCode == HTTP_CODE_OK) 
     {
         // 解压Gzip数据流
         int len = httpClient.getSize();
@@ -737,13 +733,13 @@ void get_weather_future(void)
         {
             size_t size = stream->available();  // 还剩下多少数据没有读完？
             // Serial.println(size);
-            if (size) 
+            if(size) 
             {
                 size_t realsize = ((size > sizeof(buff)) ? sizeof(buff) : size);
                 // Serial.println(realsize);
                 size_t readBytesSize = stream->readBytes(buff, realsize);
                 // Serial.write(buff,readBytesSize);
-                if (len > 0) len -= readBytesSize;
+                if(len > 0) len -= readBytesSize;
                 outbuf = (uint8_t *)malloc(sizeof(uint8_t) * 5120);
                 uint32_t outprintsize = 0;
                 int result = ArduinoZlib::libmpq__decompress_zlib(buff, readBytesSize, outbuf, 5120, outprintsize);
@@ -838,7 +834,7 @@ void get_air(void)
     int httpCode = httpClient.GET();
     Serial.println("正在获取空气质量数据");
     //如果服务器响应OK则从服务器获取响应体信息并通过串口输出
-    if (httpCode == HTTP_CODE_OK) 
+    if(httpCode == HTTP_CODE_OK) 
     {
         // 解压Gzip数据流
         int len = httpClient.getSize();
@@ -848,13 +844,13 @@ void get_air(void)
         {
             size_t size = stream->available();  // 还剩下多少数据没有读完？
             // Serial.println(size);
-            if (size) 
+            if(size) 
             {
                 size_t realsize = ((size > sizeof(buff)) ? sizeof(buff) : size);
                 // Serial.println(realsize);
                 size_t readBytesSize = stream->readBytes(buff, realsize);
                 // Serial.write(buff,readBytesSize);
-                if (len > 0) len -= readBytesSize;
+                if(len > 0) len -= readBytesSize;
                 outbuf = (uint8_t *)malloc(sizeof(uint8_t) * 5120);
                 uint32_t outprintsize = 0;
                 int result = ArduinoZlib::libmpq__decompress_zlib(buff, readBytesSize, outbuf, 5120, outprintsize);
@@ -888,14 +884,6 @@ void get_air(void)
                 nowWeather.co = doc["now"]["co"].as<const char*>();
                 nowWeather.o3 = doc["now"]["o3"].as<const char*>();
                 Serial.println("获取空气质量成功");
-                // String pm10t = "颗粒物  PM10  " + nowWeather.pm10 + "\n";
-                // String pm25t = "颗粒物  PM2.5  " + nowWeather.pm2p5 + "\n";
-                // String no2t = "二氧化氮  NO2  " + nowWeather.no2 + "\n";
-                // String so2t = "二氧化硫  SO2  " + nowWeather.so2 + "\n";
-                // String cot = "一氧化碳  CO  " + nowWeather.co + "\n";
-                // String o3t = "臭氧  O3  " + nowWeather.o3;
-                // String airoption = pm10t + pm25t + no2t + so2t + cot + o3t; 
-                // Serial.println(airoption);
             }
         }
     } 
@@ -923,7 +911,7 @@ void get_city_id(void)
     int httpCode = httpClient.GET();
     Serial.println("正在获取城市id");
     // 处理服务器答复
-    if (httpCode == HTTP_CODE_OK) 
+    if(httpCode == HTTP_CODE_OK) 
     {
         // 解压Gzip数据流
         int len = httpClient.getSize();
@@ -933,13 +921,13 @@ void get_city_id(void)
         {
             size_t size = stream->available();  // 还剩下多少数据没有读完？
             // Serial.println(size);
-            if (size) 
+            if(size) 
             {
                 size_t realsize = ((size > sizeof(buff)) ? sizeof(buff) : size);
                 // Serial.println(realsize);
                 size_t readBytesSize = stream->readBytes(buff, realsize);
                 // Serial.write(buff,readBytesSize);
-                if (len > 0) len -= readBytesSize;
+                if(len > 0) len -= readBytesSize;
                 outbuf = (uint8_t *)malloc(sizeof(uint8_t) * 5120);
                 uint32_t outprintsize = 0;
                 int result = ArduinoZlib::libmpq__decompress_zlib(buff, readBytesSize, outbuf, 5120, outprintsize);
@@ -998,26 +986,29 @@ void get_biliFollow(void)
     int httpCode = httpClient.GET();
     Serial.println("正在获取B站信息");
     // 处理服务器答复
-    if (httpCode == HTTP_CODE_OK) 
+    if(httpCode == HTTP_CODE_OK) 
     {
         String response = httpClient.getString();
-    
         JsonDocument doc;
         DeserializationError error = deserializeJson(doc, response);
-        if (error) {
-        Serial.print("deserializeJson() failed: ");
-        Serial.println(error.c_str());
-        return;
+        // if(error) {
+        //     Serial.print("deserializeJson() failed: ");
+        //     Serial.println(error.c_str());
+        //     return;
+        // }
+        if(!error)
+        {
+            JsonObject data = doc["data"];
+            // long data_mid = data["mid"]; // 378576508
+            followingCount = data["following"]; // 318
+            fansCount = data["follower"]; // 56
+            Serial.print("following: ");
+            Serial.println(followingCount);
+            Serial.print("follower: ");
+            Serial.println(fansCount);
         }
-        JsonObject data = doc["data"];
-        // long data_mid = data["mid"]; // 378576508
-        followingCount = data["following"]; // 318
-        fansCount = data["follower"]; // 56
-        Serial.print("following: ");
-        Serial.println(followingCount);
-        Serial.print("follower: ");
-        Serial.println(fansCount);
-    } else {
+    }
+    else{
         Serial.print("B站信息获取失败");
         Serial.println(httpCode);
     }
@@ -1036,26 +1027,31 @@ void get_biliView(void)
     int httpCode = httpClient.GET();
     Serial.println("正在获取B站信息");
     // 处理服务器答复
-    if (httpCode == HTTP_CODE_OK) 
+    if(httpCode == HTTP_CODE_OK) 
     {
         String response = httpClient.getString();
         JsonDocument doc;
         DeserializationError error = deserializeJson(doc, response);
-
-        if (error) {
-            Serial.print("deserializeJson() failed: ");
-            Serial.println(error.c_str());
-            return;
+        // if(error)
+        // {
+        //     Serial.print("deserializeJson() failed: ");
+        //     Serial.println(error.c_str());
+        //     return;
+        // }
+        if(!error)
+        {
+            JsonObject data = doc["data"];
+            JsonObject data_archive = data["archive"];
+            videoView = data_archive["view"]; // 10824
+            likes = data["likes"]; // 546
+            Serial.print("videoView: ");
+            Serial.println(videoView);
+            Serial.print("likes: ");
+            Serial.println(likes);
         }
-        JsonObject data = doc["data"];
-        JsonObject data_archive = data["archive"];
-        videoView = data_archive["view"]; // 10824
-        likes = data["likes"]; // 546
-        Serial.print("videoView: ");
-        Serial.println(videoView);
-        Serial.print("likes: ");
-        Serial.println(likes);
-    } else {
+    }
+    else
+    {
         Serial.print("B站信息获取失败");
         Serial.println(httpCode);
     }
@@ -1067,11 +1063,11 @@ String urlEncode(const String& text)
     for (size_t i = 0; i < text.length(); i++) 
     {
         char c = text[i];
-        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '-' || c == '_' || c == '.' || c == '~') 
+        if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '-' || c == '_' || c == '.' || c == '~') 
         {
             encodedText += c;
         } 
-        else if (c == ' ') 
+        else if(c == ' ') 
         {
             encodedText += '+';
         } 
